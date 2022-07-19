@@ -13,6 +13,7 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_VERSION=1.0.5
 
-RUN apt-get update && \
-        # apt-get install -y --no-install-recommends build-essential gcc bzip2 curl ca-certificates && \
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends shellcheck && \
+    ##build-essential gcc bzip2 curl ca-certificates && \
     pip install "poetry==$POETRY_VERSION"
