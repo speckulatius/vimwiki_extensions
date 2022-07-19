@@ -17,6 +17,7 @@ from pathlib import Path
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
 DAY_ITEMS = {
     "friday": ["make backup"],
+    "monday": ["Read FT protocoll"],
 }
 TEMPLATE = """# {diary_title}
 
@@ -94,7 +95,8 @@ def add_day_specific_items(template: str, day: datetime.date) -> str:
 
     try:
         for todo in DAY_ITEMS[day_string]:
-            tpl += f"* [ ] {todo}"
+            tpl += f"\n* [ ] {todo}"
+        tpl += "\n"
     except KeyError:
         pass
     return tpl
