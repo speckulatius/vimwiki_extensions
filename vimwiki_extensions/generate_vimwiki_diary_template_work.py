@@ -25,7 +25,6 @@ TEMPLATE = """# {diary_title}
 ## Notes
 
 
-
 ## Todo
 
 * [ ] Arbeitszeiten nachtragen
@@ -128,9 +127,9 @@ def render_template(date: datetime.date) -> str:
 
     # add any open todos to todays entry
     if len(open_todos) > 0:
-        tpl += f"\n\n### leftovers from {prev_entry_date}\n\n"
+        tpl += f"\n\n### leftovers from {prev_entry_date}\n"
         for todo in open_todos:
-            tpl += f"{todo}\n"
+            tpl += f"\n{todo}"
 
     return tpl.format(diary_title=diary_title)
 

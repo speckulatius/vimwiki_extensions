@@ -39,14 +39,14 @@ class TestRenderTemplate:
 
         return TEMPLATE
 
-    def test_regular_monday(self, render_template, tpl):
+    def test_regular_day(self, render_template, tpl):
         # given
-        monday = datetime.strptime("20200720", "%Y%m%d")
+        tuesday = datetime.strptime("20200721", "%Y%m%d")
 
         # when
-        template = render_template(monday)
+        template = render_template(tuesday)
         # then
-        assert template == tpl.format(diary_title=str(monday))
+        assert template == tpl.format(diary_title=str(tuesday))
 
     def test_regular_friday(self, render_template, tpl):
         # given
@@ -57,7 +57,8 @@ class TestRenderTemplate:
 
         # then
         tpl = tpl.format(diary_title=str(friday))
-        tpl += "* [ ] make backup"
+        tpl += "\n* [ ] make backup"
+        tpl += "\n"
         assert template == tpl
 
     def test_copies_open_todos_from_previous_entry(self, render_template, monkeypatch):
@@ -92,7 +93,7 @@ class TestRenderTemplate:
         assert "    * [ ] make it work" in split_template
         assert "    * [ ] remove harcoded tag" in split_template
 
-    def test_one_blank_line_at_end(self, render_template, monkeypatch):
+    def test_no_blank_line_at_end(self, render_template, monkeypatch):
         monkeypatch.setitem(
             generate_vimwiki_diary_template_work.CONFIG, "WIKI_PATH", TEST_PATH
         )
@@ -103,9 +104,7 @@ class TestRenderTemplate:
         template = render_template(monday)
 
         # then
-        split_template = template.split("\n")
-        assert split_template.pop() == ""
-        assert split_template.pop() != ""
+        assert template[-1:] != "\n"
 
 
 class TestGetLastEntry:
