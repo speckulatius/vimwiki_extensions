@@ -39,7 +39,7 @@ task_lint() {
 }
 
 _task_test() {
-    (cd vimwiki_extensions && poetry run py.test --cov "$@")
+    (cd vimwiki_extensions && poetry run pytest --cov "$@")
 }
 
 task_test() {
