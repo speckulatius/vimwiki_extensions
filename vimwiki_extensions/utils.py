@@ -1,7 +1,5 @@
 """Contains utility functions for vimwiki templates"""
 
-import datetime
-from functools import partial
 from pathlib import Path
 
 import jinja2
@@ -12,7 +10,10 @@ TEMPLATE_PATH = Path(DIRNAME / "templates")
 
 
 def render(template_name, title):
-    templateLoader = jinja2.FileSystemLoader(searchpath=TEMPLATE_PATH)
-    templateEnv = jinja2.Environment(loader=templateLoader)
-    template = templateEnv.get_template(f"{template_name}.jinja")
+    """
+    Render a jinja2 template.
+    """
+    template_loader = jinja2.FileSystemLoader(searchpath=TEMPLATE_PATH)
+    template_env = jinja2.Environment(loader=template_loader)
+    template = template_env.get_template(f"{template_name}.jinja")
     return template.render(title=title)

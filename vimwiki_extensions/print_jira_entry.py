@@ -1,8 +1,14 @@
 #!/usr/bin/env python
+"""
+This module prints out templates for when I create entries for
+Jira stories.
+"""
 
 import sys
 
-from utils import render
+from vimwiki_extensions.utils import render
+
+TEMPLATE_NAME = "jira_entry"
 
 
 def get_vimwiki_filename():
@@ -14,7 +20,6 @@ def get_vimwiki_filename():
 
 
 if __name__ == "__main__":
-    template_name = "jira_entry"
     title = get_vimwiki_filename()
-    rendered = render(template_name, title)
+    rendered = render(TEMPLATE_NAME, title)
     print(rendered)

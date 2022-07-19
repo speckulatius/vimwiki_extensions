@@ -19,7 +19,7 @@ task_format_python() {
 }
 
 _task_check_typing() {
-    poetry run mypy vimwiki_extensions/generate_vimwiki_diary_template_work.py
+    poetry run mypy vimwiki_extensions/*.py
 }
 
 task_check_typing() {
@@ -51,7 +51,7 @@ task_ci() {
     task_create_env
     _task_lint
     _task_check_typing
-    _task_test --cov-fail-under=90
+    _task_test --cov-fail-under=70
 }
 
 task_update_dependencies() {

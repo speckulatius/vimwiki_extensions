@@ -1,15 +1,19 @@
 #!/usr/bin/env python
+"""
+Module that is used to print out diary templates for my work wiki.
+"""
 
 import calendar
 import datetime
 import os
 import re
-from functools import partial
+from typing import Generator
 from pathlib import Path
 
-from utils import render
+from vimwiki_extensions.utils import render
 
 
+TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
 DAY_ITEMS = {
     "friday": ["make backup"],
@@ -63,7 +67,7 @@ def _is_open_todo(line: str) -> bool:
     return False
 
 
-def _get_open_todos(entry: str) -> list:
+def _get_open_todos(entry: str) -> Generator:
     """Checks diary entry for open todos and returns all that it finds."""
     lines = entry.split("\n")
     for line in lines:
@@ -72,6 +76,9 @@ def _get_open_todos(entry: str) -> list:
 
 
 def add_open_todos(template: str) -> str:
+    """
+    Append any open todos from the previous diary entry and return it.
+    """
     # load previous diary entry and check for open todos
     try:
         prev_entry_date = _get_last_entry()
@@ -91,10 +98,9 @@ def add_open_todos(template: str) -> str:
 
 
 if __name__ == "__main__":
-    template_name = "diary_work"
     today = datetime.date.today()
 
-    rendered = render(template_name, today)
+    rendered = render(TEMPLATE_NAME, today)
     items_added = add_day_specific_items(rendered, today)
     todos_added = add_open_todos(items_added)
 
