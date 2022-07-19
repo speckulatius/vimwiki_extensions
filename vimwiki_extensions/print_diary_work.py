@@ -15,8 +15,10 @@ from utils import render
 TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
 DAY_ITEMS = {
-    "friday": ["make backup"],
     "monday": ["Read FT protocoll"],
+    "tuesday": ["Sync"],
+    "thursday": ["Sync"],
+    "friday": ["make backup"],
 }
 
 
