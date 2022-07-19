@@ -19,7 +19,7 @@ TEST_PATH = Path(Path.cwd() / "tests/data/")
 @pytest.fixture(autouse=True)
 def override_config(monkeypatch):
     """Override path to vimwiki files."""
-    monkeypatch.setitem(print_diary_work.CONFIG, "WIKI_PATH", "/tmp")
+    monkeypatch.setitem(print_diary_work.CONFIG, "path_to_wiki", "/tmp")
 
 
 class TestDiaryWorkFunctions:
@@ -76,7 +76,7 @@ class TestDiaryWorkFunctions:
     def test_copies_open_todos_from_previous_entry(self, monkeypatch,
                                                    add_open_todos, dummy_tpl):
         # given
-        monkeypatch.setitem(print_diary_work.CONFIG, "WIKI_PATH", TEST_PATH)
+        monkeypatch.setitem(print_diary_work.CONFIG, "path_to_wiki", TEST_PATH)
         # when
         template = add_open_todos(dummy_tpl)
         # then
@@ -86,7 +86,7 @@ class TestDiaryWorkFunctions:
         assert "* [ ] check out this command: `rm -f foo_{1,2,3}`" in split_template
 
     def test_get_last_entry(self, get_last_entry, monkeypatch):
-        monkeypatch.setitem(print_diary_work.CONFIG, "WIKI_PATH", TEST_PATH)
+        monkeypatch.setitem(print_diary_work.CONFIG, "path_to_wiki", TEST_PATH)
         assert get_last_entry() == "1950-01-01"
 
     def test_add_day_specific_items(self, add_day_specific_items):

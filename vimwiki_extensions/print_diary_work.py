@@ -10,28 +10,23 @@ import re
 from pathlib import Path
 from typing import Generator
 
-from vimwiki_extensions.utils import render
+from vimwiki_extensions.utils import render, get_config
 
 today = datetime.date.today()
 TEMPLATE_NAME = "diary_work"
-CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
-DAY_ITEMS = {
-    "monday": [f"Arbeitszeiten nachtragen ({today})"],
-    "tuesday": [f"Arbeitszeiten nachtragen ({today})"],
-    "wednesday": [f"Arbeitszeiten nachtragen ({today})"],
-    "thursday": [f"Arbeitszeiten nachtragen ({today})"],
-    "friday": [f"Arbeitszeiten nachtragen ({today})", "make backup"],
-}
+CONFIG = get_config()
 
 
 def add_day_specific_items(template: str, day: datetime.date) -> str:
     """
-    Look up items for a specific day in a dictionary and append them to
+    Looks up items for a specific day in a dictionary and appends them to
     a passed template.
     """
+    day_items = CONFIG["day_specific_todo_items"]
+
     tpl = template
     day_string = calendar.day_name[day.weekday()].lower()
-    todos = DAY_ITEMS.get(day_string)
+    todos = day_items.get(day_string)
     if todos:
         for todo in todos:
             tpl += f"\n* [ ] {todo}"
@@ -44,7 +39,7 @@ def _get_last_entry() -> str:
 
     date_pattern = r"^\d{4}-\d{2}-\d{2}"
     files = [
-        f for f in os.listdir(CONFIG["WIKI_PATH"])
+        f for f in os.listdir(CONFIG["path_to_wiki"])
         if re.match(date_pattern, f)
     ]
 
@@ -88,7 +83,7 @@ def add_open_todos(template: str) -> str:
     # load previous diary entry and check for open todos
     try:
         prev_entry_date = _get_last_entry()
-        with open(CONFIG["WIKI_PATH"] / f"{prev_entry_date}.md",
+        with open(Path(CONFIG["path_to_wiki"]) / f"{prev_entry_date}.md",
                   "r") as diary_file:
             prev_entry = diary_file.read()
         open_todos = list(_get_open_todos(prev_entry))

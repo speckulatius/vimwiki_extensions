@@ -1,0 +1,8 @@
+title = "Configuration file the vimwiki templating "
+
+[day_specific_todo_items]
+monday = ["some task that I need to do each day"]
+tuesday = []
+wednesday = []
+thursday = []
+friday = []

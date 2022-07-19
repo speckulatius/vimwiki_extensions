@@ -23,8 +23,8 @@ class TestRenderTemplateJira:
     @pytest.mark.parametrize(
         "taskname",
         [
-            ("PIT-1234"),
-            ("BT-12312"),
+            ("AB-1234"),
+            ("foo-12312"),
         ],
     )
     def test_get_title(self, taskname, get_vimwiki_filename):
