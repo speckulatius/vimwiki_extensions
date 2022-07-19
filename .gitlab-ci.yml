@@ -1,4 +1,4 @@
-image: "python:3.8-slim-buster"
+image: registry.gitlab.com/specktrum/vimwiki_extensions:latest
 
 before_script:
   - apt update && apt upgrade
