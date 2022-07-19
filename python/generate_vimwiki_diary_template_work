@@ -1,0 +1,114 @@
+#!/home/jan/miniconda3/bin/python
+
+"""
+When run, this module prints out a template for a diary entry.
+
+It is used whenever I create a new diary entry in my vimwiki (see
+init.vim config).
+"""
+
+
+import datetime
+import os
+import re
+import sys
+from functools import partial
+from functools import reduce
+from pathlib import Path
+from typing import List
+
+WIKI_PATH = Path("/home/jan/vimwiki/")
+TEMPLATE = """# {diary_title}
+
+
+## Notes
+
+
+
+## Todo
+
+* [ ] Arbeitszeiten nachtragen
+* [ ] Striche
+"""
+
+
+def is_day(date, weekday):
+    """Given a date and weekday, this function returns whether
+    the date is that specific weekday or not."""
+    return date.weekday() == weekday
+
+
+is_monday = partial(is_day, weekday=0)
+is_friday = partial(is_day, weekday=4)
+
+
+def get_open_todos(prev_entry: List[str]) -> list:
+    """
+    Checks diary entry from previous (week)day for open
+    todos and appends all that it finds.
+
+    pattern should match the entire line if it contains:
+        * [ ]
+        * [o]
+        * [.]
+        * [O]
+    """
+    pattern_open_todo = (
+        r"(?P<CHECKBOXES>\S*\* \[\.\]|\* \[o\]|\* \[O\]|\* \[ \])(?P<TODO_ITEM>.*)"
+    )
+    open_todos = re.findall(pattern_open_todo, prev_entry)
+
+    flattened = []
+    for checkbox, text in open_todos:
+        flattened.append(checkbox + text)
+
+    return flattened
+
+
+def get_last_entry(wiki_path=WIKI_PATH):
+    """Find last diary entry in a given directory. This assumes
+    the filenames to correspondt to a specific date pattern."""
+
+    date_pattern = r"^\d{4}-\d{2}-\d{2}"
+    files = [f for f in os.listdir(wiki_path) if re.match(date_pattern, f)]
+
+    return sorted(files)[-1].split(".")[0]
+
+
+def print_template(date, template=TEMPLATE):
+    """
+    For a given date, print out a diary template.
+
+    The template is currently being customized based on the date and
+    the contents of the previous weekday's diary-content.
+
+    To work with vimwiki, the template simply needs to be printed out
+    (not returned).
+    """
+    diary_title = (
+        date if len(sys.argv) < 2 else sys.argv[1].split("/")[-1].split(".")[0]
+    )
+    if is_friday(date):
+        template += "* [ ] make backup"
+
+    # load previous diary entry and check for open todos
+    prev_entry_date = get_last_entry()
+    try:
+        with open(WIKI_PATH / f"{prev_entry_date}.md", "r") as diary_file:
+            prev_entry = diary_file.read().splitlines()
+
+        long_string = reduce(lambda x, y: f"{x}\n{y}", prev_entry)
+        open_todos = get_open_todos(long_string)
+    except FileNotFoundError:
+        open_todos = []
+
+    # add any open todos to todays entry
+    if len(open_todos) > 0:
+        template += f"\n\n### leftovers from {prev_entry_date}\n\n"
+        for todo in open_todos:
+            template += f"{todo}\n"
+
+    print(template.format(diary_title=diary_title))
+
+
+print_template(datetime.date.today())
