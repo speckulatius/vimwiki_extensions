@@ -15,7 +15,7 @@ task_create_env() {
 
 task_format_python() {
     task_create_env
-    poetry run black vimwiki_extensions/*
+    poetry run yapf --vv -ir vimwiki_extensions/*
 }
 
 _task_check_typing() {
@@ -30,7 +30,10 @@ task_check_typing() {
 _task_lint() {
     shellcheck ./*.sh
     poetry run pylint vimwiki_extensions/*
-    poetry run black vimwiki_extensions/* --check
+    echo "Running yapf..."
+    echo "##########################"
+    echo
+    poetry run yapf --diff -r vimwiki_extensions/*
 }
 
 task_lint() {
