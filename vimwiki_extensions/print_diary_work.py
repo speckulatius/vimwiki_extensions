@@ -12,10 +12,15 @@ from typing import Generator
 
 from vimwiki_extensions.utils import render
 
+today = datetime.date.today()
 TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
 DAY_ITEMS = {
-    "friday": ["make backup"],
+    "monday": [f"Arbeitszeiten nachtragen ({today})"],
+    "tuesday": [f"Arbeitszeiten nachtragen ({today})"],
+    "wednesday": [f"Arbeitszeiten nachtragen ({today})"],
+    "thursday": [f"Arbeitszeiten nachtragen ({today})"],
+    "friday": [f"Arbeitszeiten nachtragen ({today})", "make backup"],
 }
 
 
@@ -103,8 +108,6 @@ def add_open_todos(template: str) -> str:
 
 
 if __name__ == "__main__":
-    today = datetime.date.today()
-
     rendered = render(TEMPLATE_NAME, today)
     items_added = add_day_specific_items(rendered, today)
     todos_added = add_open_todos(items_added)
