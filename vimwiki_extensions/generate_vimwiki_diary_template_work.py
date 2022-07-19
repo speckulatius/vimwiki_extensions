@@ -24,8 +24,7 @@ TEMPLATE = """# {diary_title}
 ## Todo
 
 * [ ] Arbeitszeiten nachtragen
-* [ ] Striche
-"""
+* [ ] Striche"""
 
 
 def is_day(date: datetime.date, weekday: int) -> bool:
