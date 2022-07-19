@@ -7,6 +7,7 @@ It is used whenever I create a new diary entry in my vimwiki (see
 init.vim config).
 """
 
+import calendar
 import datetime
 import os
 import re
@@ -81,6 +82,14 @@ def get_last_entry() -> str:
         raise FileNotFoundError("No previous entries")
 
 
+def add_day_specific_items(template: str, day: datetime.date) -> str:
+    calendar.day_name[date.weekday()]
+
+    if is_friday(date):
+        tpl += "* [ ] make backup"
+
+
+
 def render_template(date: datetime.date) -> str:
     """
     For a given date, print out a diary template.
@@ -94,8 +103,7 @@ def render_template(date: datetime.date) -> str:
     tpl = TEMPLATE
     diary_title = date
 
-    if is_friday(date):
-        tpl += "* [ ] make backup"
+    tpl = add_day_specific_items(tpl, date)
 
     # load previous diary entry and check for open todos
     try:
