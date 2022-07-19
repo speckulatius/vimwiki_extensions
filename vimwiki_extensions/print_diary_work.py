@@ -16,8 +16,6 @@ TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
 DAY_ITEMS = {
     "monday": ["Read FT protocoll"],
-    "tuesday": ["Sync"],
-    "thursday": ["Sync"],
     "friday": ["make backup"],
 }
 
@@ -29,14 +27,10 @@ def add_day_specific_items(template: str, day: datetime.date) -> str:
     """
     tpl = template
     day_string = calendar.day_name[day.weekday()].lower()
-
-    try:
-        for todo in DAY_ITEMS[day_string]:
+    todos = DAY_ITEMS.get(day_string)
+    if todos:
+        for todo in todos:
             tpl += f"\n* [ ] {todo}"
-        # tpl += "\n"
-    except KeyError:
-        pass
-
     return tpl
 
 
