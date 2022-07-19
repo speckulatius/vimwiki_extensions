@@ -14,7 +14,8 @@ import re
 from functools import partial
 from pathlib import Path
 
-CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
+
+CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/pit/")}
 DAY_ITEMS = {
     "friday": ["make backup"],
     "monday": ["Read FT protocoll"],
