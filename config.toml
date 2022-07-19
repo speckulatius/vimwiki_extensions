@@ -1,4 +1,5 @@
 title = "Configuration file the vimwiki templating "
+path_to_wiki = "path/to/your/vimwiki"
 
 [day_specific_todo_items]
 monday = ["some task that I need to do each day"]
