@@ -16,7 +16,7 @@ import generate_vimwiki_diary_template_work
 
 
 TEST_PATH = Path(
-    Path.home() / "personal/vimwiki_extensions/vimwiki_extensions/tests/data/"
+    Path.cwd() / "tests/data/"
 )
 
 
