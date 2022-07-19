@@ -17,6 +17,7 @@ from functools import reduce
 from pathlib import Path
 from typing import List
 
+
 WIKI_PATH = Path("/home/jan/vimwiki/")
 TEMPLATE = """# {diary_title}
 
@@ -75,7 +76,7 @@ def get_last_entry(wiki_path=WIKI_PATH):
     return sorted(files)[-1].split(".")[0]
 
 
-def print_template(date, template=TEMPLATE):
+def render_template(date, template=TEMPLATE, wiki_path=WIKI_PATH):
     """
     For a given date, print out a diary template.
 
@@ -94,7 +95,7 @@ def print_template(date, template=TEMPLATE):
     # load previous diary entry and check for open todos
     prev_entry_date = get_last_entry()
     try:
-        with open(WIKI_PATH / f"{prev_entry_date}.md", "r") as diary_file:
+        with open(wiki_path / f"{prev_entry_date}.md", "r") as diary_file:
             prev_entry = diary_file.read().splitlines()
 
         long_string = reduce(lambda x, y: f"{x}\n{y}", prev_entry)
@@ -108,7 +109,9 @@ def print_template(date, template=TEMPLATE):
         for todo in open_todos:
             template += f"{todo}\n"
 
-    print(template.format(diary_title=diary_title))
+    return template.format(diary_title=diary_title)
 
 
-print_template(datetime.date.today())
+if __name__ == "__main__":
+    template = render_template(datetime.date.today())
+    print(template)
