@@ -7,18 +7,14 @@ It is used whenever I create a new diary entry in my vimwiki (see
 init.vim config).
 """
 
-
 import datetime
 import os
 import re
-import sys
 from functools import partial
-from functools import reduce
 from pathlib import Path
 from typing import List
 
-
-WIKI_PATH = Path("/home/jan/vimwiki/")
+CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
 TEMPLATE = """# {diary_title}
 
 
@@ -43,6 +39,21 @@ is_monday = partial(is_day, weekday=0)
 is_friday = partial(is_day, weekday=4)
 
 
+def is_open_todo(line: str) -> bool:
+    """Based on the presence of certain symbols, checks whether
+    a string is an open todo item or not
+    """
+    open_todo_symbols = [
+        "* [ ]",
+        "* [o]",
+        "* [.]",
+        "* [O]",
+    ]
+    if any(symbol in line for symbol in open_todo_symbols):
+        return True
+    return False
+
+
 def get_open_todos(prev_entry: List[str]) -> list:
     """
     Checks diary entry from previous (week)day for open
@@ -54,29 +65,30 @@ def get_open_todos(prev_entry: List[str]) -> list:
         * [.]
         * [O]
     """
-    pattern_open_todo = (
-        r"(?P<CHECKBOXES>\S*\* \[\.\]|\* \[o\]|\* \[O\]|\* \[ \])(?P<TODO_ITEM>.*)"
-    )
-    open_todos = re.findall(pattern_open_todo, prev_entry)
+    lines = prev_entry.split("\n")
+    open_todos = []
+    for line in lines:
+        if is_open_todo(line):
+            open_todos.append(line)
 
-    flattened = []
-    for checkbox, text in open_todos:
-        flattened.append(checkbox + text)
-
-    return flattened
+    return open_todos
 
 
-def get_last_entry(wiki_path=WIKI_PATH):
+def get_last_entry():
     """Find last diary entry in a given directory. This assumes
-    the filenames to correspondt to a specific date pattern."""
+    the filenames to correspond to a specific date pattern."""
 
     date_pattern = r"^\d{4}-\d{2}-\d{2}"
-    files = [f for f in os.listdir(wiki_path) if re.match(date_pattern, f)]
+    files = [f for f in os.listdir(CONFIG["WIKI_PATH"]) if re.match(date_pattern, f)]
 
-    return sorted(files)[-1].split(".")[0]
+    try:
+        return sorted(files)[-1].split(".")[0]
+    except IndexError:
+        # pylint: disable=raise-missing-from
+        raise FileNotFoundError("No previous entries")
 
 
-def render_template(date, template=TEMPLATE, wiki_path=WIKI_PATH):
+def render_template(date):
     """
     For a given date, print out a diary template.
 
@@ -86,32 +98,30 @@ def render_template(date, template=TEMPLATE, wiki_path=WIKI_PATH):
     To work with vimwiki, the template simply needs to be printed out
     (not returned).
     """
-    diary_title = (
-        date if len(sys.argv) < 2 else sys.argv[1].split("/")[-1].split(".")[0]
-    )
+    tpl = TEMPLATE
+    diary_title = date
+
     if is_friday(date):
-        template += "* [ ] make backup"
+        tpl += "* [ ] make backup"
 
     # load previous diary entry and check for open todos
-    prev_entry_date = get_last_entry()
     try:
-        with open(wiki_path / f"{prev_entry_date}.md", "r") as diary_file:
-            prev_entry = diary_file.read().splitlines()
-
-        long_string = reduce(lambda x, y: f"{x}\n{y}", prev_entry)
-        open_todos = get_open_todos(long_string)
+        prev_entry_date = get_last_entry()
+        with open(CONFIG["WIKI_PATH"] / f"{prev_entry_date}.md", "r") as diary_file:
+            prev_entry = diary_file.read()
+        open_todos = get_open_todos(prev_entry)
     except FileNotFoundError:
         open_todos = []
 
     # add any open todos to todays entry
     if len(open_todos) > 0:
-        template += f"\n\n### leftovers from {prev_entry_date}\n\n"
+        tpl += f"\n\n### leftovers from {prev_entry_date}\n\n"
         for todo in open_todos:
-            template += f"{todo}\n"
+            tpl += f"{todo}\n"
 
-    return template.format(diary_title=diary_title)
+    return tpl.format(diary_title=diary_title)
 
 
 if __name__ == "__main__":
-    template = render_template(datetime.date.today())
-    print(template)
+    template_rendered = render_template(datetime.date.today())
+    print(template_rendered)
