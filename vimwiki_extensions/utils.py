@@ -7,7 +7,7 @@ from pathlib import Path
 import jinja2
 
 
-DIRNAME = Path("/home/jan/personal/vimwiki_extensions/vimwiki_extensions")
+DIRNAME = Path("/home/jan/privat/vimwiki_extensions/vimwiki_extensions")
 TEMPLATE_PATH = Path(DIRNAME / "templates")
 
 
