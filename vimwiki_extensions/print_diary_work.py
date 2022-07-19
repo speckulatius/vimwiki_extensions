@@ -104,7 +104,7 @@ def add_open_todos(template: str) -> str:
 
 if __name__ == "__main__":
     rendered = render(TEMPLATE_NAME, today)
-    items_added = add_day_specific_items(rendered, today)
-    todos_added = add_open_todos(items_added)
+    rendered = add_day_specific_items(rendered, today)
+    rendered = add_open_todos(rendered)
 
-    print(todos_added)
+    print(rendered)

@@ -36,3 +36,11 @@ class TestRenderTemplateJira:
 
         # then
         assert title == taskname
+
+
+def remove_whitespace():
+    pass
+
+
+def remove_trailing_whitespace():
+    pass
