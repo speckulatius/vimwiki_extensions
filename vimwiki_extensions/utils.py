@@ -4,8 +4,8 @@ from pathlib import Path
 
 import jinja2
 
-DIRNAME = Path("/home/jan/privat/vimwiki_extensions/vimwiki_extensions")
-TEMPLATE_PATH = Path(DIRNAME / "templates")
+HERE = Path(__file__).parent
+TEMPLATE_PATH = Path(HERE / "templates")
 
 
 def render(template_name, title):
