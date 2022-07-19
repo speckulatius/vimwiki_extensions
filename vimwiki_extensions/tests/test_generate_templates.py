@@ -11,11 +11,13 @@ import sys
 
 import pytest
 
-sys.path.append("../python")
+sys.path.append("../vimwiki_extensions")
 import generate_vimwiki_diary_template_work
 
 
-TEST_PATH = Path("/home/jan/personal/utils/python/tests/data/")
+TEST_PATH = Path(
+    Path.home() / "personal/vimwiki_extensions/vimwiki_extensions/tests/data/"
+)
 
 
 @pytest.fixture(autouse=True)
