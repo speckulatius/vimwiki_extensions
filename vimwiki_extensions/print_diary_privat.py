@@ -5,7 +5,7 @@ Module that is used to print out diary templates for my privat wiki.
 
 import datetime
 
-from utils import render
+from vimwiki_extensions.utils import render
 
 TEMPLATE_NAME = "diary_privat"
 
