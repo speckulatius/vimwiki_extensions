@@ -5,20 +5,17 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=no-self-use
 
-from datetime import datetime
-from pathlib import Path
 import sys
 
 import pytest
 
 sys.path.append("../vimwiki_extensions")
-import utils
 
 
 class TestRender:
     @pytest.fixture
     def render(self):
-        from utils import render
+        from vimwiki_extensions.utils import render
 
         return render
 
