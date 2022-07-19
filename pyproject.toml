@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "utils"
+name = "vimwiki_extensions"
 version = "0.1.0"
 description = "Utils for my personal stuff"
 authors = ["Jan Specker"]
