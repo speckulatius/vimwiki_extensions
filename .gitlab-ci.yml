@@ -3,7 +3,7 @@ image: registry.gitlab.com/specktrum/vimwiki_extensions:latest
 stages:
   - check_code
 
-check_code:
+lint | check-typing | test:
   stage: check_code
   script:
     - ./run.sh ci
