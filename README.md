@@ -10,25 +10,23 @@
     ./run.sh test
 
 ## Usage
-
-Install this package the environment that you use to start
+Install this package in the environment that you use to start
 your vimwiki in. Currently this is simply done by using the
 local package, e.g. by running:
 
-```sh
-poetry build
-export VERSION=$(poetry version | awk '{print $2}')
-pyenv activate <YOUR_ENV>
-pip install dist/vimwiki_extensions-"$VERSION"-py3-none-any.whl
-```
+    poetry build
+    export VERSION=$(poetry version | awk '{print $2}')
+    pyenv activate <YOUR_ENV>
+    pip install dist/vimwiki_extensions-"$VERSION"-py3-none-any.whl
 
-There is also a dependency to the vimwiki vim config: We call the python modules
-specifically from the vim cmd, which is why the shebang is required at the top
-of the file.
+To make use of the templates, we simply invoke a python module when a file with
+a specific pattern is created. To do this, simply add a such as the following
+to your init.vim configuration file:
 
+    au BufNewFile ~/vimwikis/work/PROJECT/PROJECT_HANDLE-*.md :silent 0r !~/vimwikis/vimwiki_extensions/vimwiki_extensions/print_jira_entry.py '%'
 
 ## Todo
-* [ ] make this a library where user specific stuff is stored locally and gitignored:
-  * [ ] DAY_SPECIFIC todos shouldnt be commited
-* [ ] make sure mypy is used everywhere
-* [ ] dont call the modules from vim, but use the env commands
+* [ ] move all logic to a single python module which takes an additional
+      argument instead of copying modules around
+* [ ] finish unit tests
+
