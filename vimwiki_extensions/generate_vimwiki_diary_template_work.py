@@ -63,12 +63,9 @@ def get_open_todos(prev_entry: str) -> list:
     todos and returns all that it finds.
     """
     lines = prev_entry.split("\n")
-    open_todos = []
     for line in lines:
         if is_open_todo(line):
-            open_todos.append(line)
-
-    return open_todos
+            yield line
 
 
 def get_last_entry() -> str:
@@ -122,7 +119,7 @@ def render_template(date: datetime.date) -> str:
         prev_entry_date = get_last_entry()
         with open(CONFIG["WIKI_PATH"] / f"{prev_entry_date}.md", "r") as diary_file:
             prev_entry = diary_file.read()
-        open_todos = get_open_todos(prev_entry)
+        open_todos = list(get_open_todos(prev_entry))
     except FileNotFoundError:
         open_todos = []
 
