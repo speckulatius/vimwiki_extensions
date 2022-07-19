@@ -6,7 +6,7 @@ Jira stories.
 
 import sys
 
-from vimwiki_extensions.utils import render
+from utils import render
 
 TEMPLATE_NAME = "jira_entry"
 

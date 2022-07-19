@@ -10,7 +10,7 @@ import re
 from pathlib import Path
 from typing import Generator
 
-from vimwiki_extensions.utils import render
+from utils import render
 
 TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
