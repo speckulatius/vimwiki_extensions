@@ -92,6 +92,21 @@ class TestRenderTemplate:
         assert "    * [ ] make it work" in split_template
         assert "    * [ ] remove harcoded tag" in split_template
 
+    def test_one_blank_line_at_end(self, render_template, monkeypatch):
+        monkeypatch.setitem(
+            generate_vimwiki_diary_template_work.CONFIG, "WIKI_PATH", TEST_PATH
+        )
+
+        monday = datetime.strptime("20200720", "%Y%m%d")
+
+        # when
+        template = render_template(monday)
+
+        # then
+        split_template = template.split("\n")
+        assert split_template.pop() == ''
+        assert split_template.pop() != ''
+
 
 class TestGetLastEntry:
     @pytest.fixture
