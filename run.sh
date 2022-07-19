@@ -39,7 +39,7 @@ task_lint() {
 }
 
 _task_test() {
-    (cd vimwiki_extensions && poetry run py.test)
+    (cd vimwiki_extensions && poetry run py.test "$@")
 }
 
 task_test() {
@@ -70,7 +70,7 @@ case "$cmd" in
   format) task_format_python ;;
   typing) task_check_typing;;
   lint) task_lint ;;
-  test) task_test ;;
+  test) task_test "$@";;
   update) task_update_dependencies ;;
   ci) task_ci ;;
 esac
