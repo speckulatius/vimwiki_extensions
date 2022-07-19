@@ -104,8 +104,8 @@ class TestRenderTemplate:
 
         # then
         split_template = template.split("\n")
-        assert split_template.pop() == ''
-        assert split_template.pop() != ''
+        assert split_template.pop() == ""
+        assert split_template.pop() != ""
 
 
 class TestGetLastEntry:

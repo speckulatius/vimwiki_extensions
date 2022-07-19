@@ -16,7 +16,7 @@ from pathlib import Path
 
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
 DAY_ITEMS = {
-    'friday': ['make backup'],
+    "friday": ["make backup"],
 }
 TEMPLATE = """# {diary_title}
 
@@ -85,12 +85,16 @@ def get_last_entry() -> str:
 
 
 def add_day_specific_items(template: str, day: datetime.date) -> str:
+    """
+    Look up items for a specific day in a dictionary and append them to
+    a passed template.
+    """
     tpl = template
     day_string = calendar.day_name[day.weekday()].lower()
 
     try:
         for todo in DAY_ITEMS[day_string]:
-            tpl += f'* [ ] {todo}'
+            tpl += f"* [ ] {todo}"
     except KeyError:
         pass
     return tpl
