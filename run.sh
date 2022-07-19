@@ -41,7 +41,6 @@ task_update_dependencies() {
 }
 
 task_build_image() {
-    task_ci
     docker build -t registry.gitlab.com/specktrum/vimwiki_extensions .
     docker push registry.gitlab.com/specktrum/vimwiki_extensions
 }
