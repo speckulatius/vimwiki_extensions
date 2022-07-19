@@ -21,13 +21,13 @@ task_format_python() {
 task_check_typing() {
     task_create_env
     poetry run mypy vimwiki_extensions/generate_vimwiki_diary_template_work.py
-
 }
 
 task_lint() {
     task_create_env
     shellcheck ./*.sh
     poetry run pylint vimwiki_extensions/*
+    poetry run black vimwiki_extensions/* --check
 }
 
 task_test() {

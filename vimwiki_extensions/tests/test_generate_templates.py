@@ -15,9 +15,7 @@ sys.path.append("../vimwiki_extensions")
 import generate_vimwiki_diary_template_work
 
 
-TEST_PATH = Path(
-    Path.cwd() / "tests/data/"
-)
+TEST_PATH = Path(Path.cwd() / "tests/data/")
 
 
 @pytest.fixture(autouse=True)

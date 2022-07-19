@@ -12,7 +12,6 @@ import os
 import re
 from functools import partial
 from pathlib import Path
-from typing import List
 
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
 TEMPLATE = """# {diary_title}
