@@ -1,7 +1,7 @@
 image: registry.gitlab.com/specktrum/vimwiki_extensions:latest
 
 before_script:
-  - apt update && apt upgrade
+  - apt update && apt upgrade -y
 
 stages:
   - format
