@@ -87,9 +87,10 @@ def add_open_todos(template: str) -> str:
         open_todos = list(_get_open_todos(prev_entry))
     except FileNotFoundError:
         open_todos = []
+        prev_entry_date = None
 
     # add any open todos to todays entry
-    if len(open_todos) > 0:
+    if len(open_todos) > 0 and prev_entry_date:
         template += f"\n\n\n### leftovers from {prev_entry_date}\n"
         for todo in open_todos:
             template += f"\n{todo}"
