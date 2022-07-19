@@ -51,7 +51,7 @@ task_ci() {
     task_create_env
     _task_lint
     _task_check_typing
-    _task_test
+    _task_test --cov-fail-under=90
 }
 
 task_update_dependencies() {
