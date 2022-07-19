@@ -1,4 +1,4 @@
-#!/home/jan/miniconda3/bin/python
+#!/home/jan/.pyenv/shims/python
 
 """
 When run, this module prints out a template for a diary entry.
