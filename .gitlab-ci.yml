@@ -3,6 +3,7 @@ image: registry.gitlab.com/specktrum/vimwiki_extensions:latest
 stages:
   - format
   - lint
+  - typing
   - test
   - update
 
@@ -15,6 +16,11 @@ lint:
   stage: lint
   script:
     - ./run.sh lint
+
+typing:
+  stage: typing
+  script:
+    - ./run.sh typing
 
 test:
   stage: test

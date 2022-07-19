@@ -5,7 +5,7 @@ set -eou pipefail
 
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage: $0 create-env | build | format | lint | test | update | ci" >&2
+  echo "Usage: $0 create-env | build | format | typing | lint | test | update | ci" >&2
   exit 1
 fi
 
@@ -18,6 +18,11 @@ task_format_python() {
     poetry run black vimwiki_extensions/*
 }
 
+task_check_typing() {
+    task_create_env
+    poetry run mypy vimwiki_extensions/generate_vimwiki_diary_template_work.py
+
+}
 
 task_lint() {
     task_create_env
@@ -50,6 +55,7 @@ case "$cmd" in
   create-env) task_create_env ;;
   build) task_build_image ;;
   format) task_format_python ;;
+  typing) task_check_typing;;
   lint) task_lint ;;
   test) task_test ;;
   update) task_update_dependencies ;;

@@ -29,7 +29,7 @@ TEMPLATE = """# {diary_title}
 """
 
 
-def is_day(date, weekday):
+def is_day(date: datetime.date, weekday: int) -> bool:
     """Given a date and weekday, this function returns whether
     the date is that specific weekday or not."""
     return date.weekday() == weekday
@@ -54,16 +54,10 @@ def is_open_todo(line: str) -> bool:
     return False
 
 
-def get_open_todos(prev_entry: List[str]) -> list:
+def get_open_todos(prev_entry: str) -> list:
     """
     Checks diary entry from previous (week)day for open
-    todos and appends all that it finds.
-
-    pattern should match the entire line if it contains:
-        * [ ]
-        * [o]
-        * [.]
-        * [O]
+    todos and returns all that it finds.
     """
     lines = prev_entry.split("\n")
     open_todos = []
@@ -74,7 +68,7 @@ def get_open_todos(prev_entry: List[str]) -> list:
     return open_todos
 
 
-def get_last_entry():
+def get_last_entry() -> str:
     """Find last diary entry in a given directory. This assumes
     the filenames to correspond to a specific date pattern."""
 
@@ -88,7 +82,7 @@ def get_last_entry():
         raise FileNotFoundError("No previous entries")
 
 
-def render_template(date):
+def render_template(date: datetime.date) -> str:
     """
     For a given date, print out a diary template.
 
