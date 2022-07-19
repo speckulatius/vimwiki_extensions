@@ -7,11 +7,10 @@ import calendar
 import datetime
 import os
 import re
-from typing import Generator
 from pathlib import Path
+from typing import Generator
 
 from vimwiki_extensions.utils import render
-
 
 TEMPLATE_NAME = "diary_work"
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwikis/work/byt")}
@@ -35,6 +34,7 @@ def add_day_specific_items(template: str, day: datetime.date) -> str:
         # tpl += "\n"
     except KeyError:
         pass
+
     return tpl
 
 
@@ -43,7 +43,10 @@ def _get_last_entry() -> str:
     the filenames to correspond to a specific date pattern."""
 
     date_pattern = r"^\d{4}-\d{2}-\d{2}"
-    files = [f for f in os.listdir(CONFIG["WIKI_PATH"]) if re.match(date_pattern, f)]
+    files = [
+        f for f in os.listdir(CONFIG["WIKI_PATH"])
+        if re.match(date_pattern, f)
+    ]
 
     try:
         return sorted(files)[-1].split(".")[0]
@@ -62,14 +65,17 @@ def _is_open_todo(line: str) -> bool:
         "* [.]",
         "* [O]",
     ]
+
     if any(symbol in line for symbol in open_todo_symbols):
         return True
+
     return False
 
 
 def _get_open_todos(entry: str) -> Generator:
     """Checks diary entry for open todos and returns all that it finds."""
     lines = entry.split("\n")
+
     for line in lines:
         if _is_open_todo(line):
             yield line
@@ -82,7 +88,8 @@ def add_open_todos(template: str) -> str:
     # load previous diary entry and check for open todos
     try:
         prev_entry_date = _get_last_entry()
-        with open(CONFIG["WIKI_PATH"] / f"{prev_entry_date}.md", "r") as diary_file:
+        with open(CONFIG["WIKI_PATH"] / f"{prev_entry_date}.md",
+                  "r") as diary_file:
             prev_entry = diary_file.read()
         open_todos = list(_get_open_todos(prev_entry))
     except FileNotFoundError:
@@ -90,8 +97,10 @@ def add_open_todos(template: str) -> str:
         prev_entry_date = None
 
     # add any open todos to todays entry
+
     if len(open_todos) > 0 and prev_entry_date:
         template += f"\n\n\n### leftovers from {prev_entry_date}\n"
+
         for todo in open_todos:
             template += f"\n{todo}"
 

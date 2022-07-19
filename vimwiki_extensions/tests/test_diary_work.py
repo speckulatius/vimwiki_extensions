@@ -13,7 +13,6 @@ import pytest
 sys.path.append("../vimwiki_extensions")
 import print_diary_work
 
-
 TEST_PATH = Path(Path.cwd() / "tests/data/")
 
 
@@ -74,9 +73,8 @@ class TestDiaryWorkFunctions:
     def dummy_tpl(self):
         return "foo"
 
-    def test_copies_open_todos_from_previous_entry(
-        self, monkeypatch, add_open_todos, dummy_tpl
-    ):
+    def test_copies_open_todos_from_previous_entry(self, monkeypatch,
+                                                   add_open_todos, dummy_tpl):
         # given
         monkeypatch.setitem(print_diary_work.CONFIG, "WIKI_PATH", TEST_PATH)
         # when

@@ -10,7 +10,6 @@ import sys
 
 import pytest
 
-
 TEST_PATH = Path(Path.cwd() / "tests/data/")
 
 
