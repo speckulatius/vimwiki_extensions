@@ -96,7 +96,7 @@ def add_day_specific_items(template: str, day: datetime.date) -> str:
     try:
         for todo in DAY_ITEMS[day_string]:
             tpl += f"\n* [ ] {todo}"
-        tpl += "\n"
+        # tpl += "\n"
     except KeyError:
         pass
     return tpl
@@ -136,5 +136,6 @@ def render_template(date: datetime.date) -> str:
 
 
 if __name__ == "__main__":
+
     template_rendered = render_template(datetime.date.today())
     print(template_rendered)
