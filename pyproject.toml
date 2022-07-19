@@ -12,8 +12,8 @@ Jinja2 = "^2.11.2"
 mypy = "*"
 pytest = "*"
 pytest-cov = "^2.10.1"
-pylint = "*"
 yapf = "^0.30.0"
+flake8 = "^3.9.2"
 
 [build-system]
 requires = ["poetry>=0.12"]

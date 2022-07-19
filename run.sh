@@ -19,6 +19,7 @@ task_format_python() {
 }
 
 _task_check_typing() {
+    echo "Running mypy..."
     poetry run mypy vimwiki_extensions/*.py
 }
 
@@ -28,11 +29,11 @@ task_check_typing() {
 }
 
 _task_lint() {
+    echo "Running shellcheck..."
     shellcheck ./*.sh
-    poetry run pylint vimwiki_extensions/*
+    echo "Running flake8..."
+    poetry run flake8 --statistics --config .flake8 vimwiki_extensions
     echo "Running yapf..."
-    echo "##########################"
-    echo
     poetry run yapf --diff -r vimwiki_extensions/*
 }
 
@@ -42,6 +43,7 @@ task_lint() {
 }
 
 _task_test() {
+    echo "Running pytest..."
     (cd vimwiki_extensions && poetry run pytest --cov "$@")
 }
 

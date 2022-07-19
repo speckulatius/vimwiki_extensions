@@ -1,0 +1,5 @@
+[flake8]
+ignore = [
+    E501  # line length, this is handled by the autoformatter
+    W503  # line break before binary operator, soon to be the new best practice
+]

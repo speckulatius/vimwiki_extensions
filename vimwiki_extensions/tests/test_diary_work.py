@@ -11,7 +11,7 @@ import sys
 import pytest
 
 sys.path.append("../vimwiki_extensions")
-import print_diary_work
+import print_diary_work  # noqa: E402
 
 TEST_PATH = Path(Path.cwd() / "tests/data/")
 
