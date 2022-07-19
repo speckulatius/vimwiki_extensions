@@ -63,12 +63,9 @@ def _is_open_todo(line: str) -> bool:
     return False
 
 
-def _get_open_todos(prev_entry: str) -> list:
-    """
-    Checks diary entry from previous (week)day for open
-    todos and returns all that it finds.
-    """
-    lines = prev_entry.split("\n")
+def _get_open_todos(entry: str) -> list:
+    """Checks diary entry for open todos and returns all that it finds."""
+    lines = entry.split("\n")
     for line in lines:
         if _is_open_todo(line):
             yield line
