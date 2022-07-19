@@ -15,6 +15,9 @@ from functools import partial
 from pathlib import Path
 
 CONFIG = {"WIKI_PATH": Path("/home/jan/vimwiki/")}
+DAY_ITEMS = {
+    'friday': ['make backup'],
+}
 TEMPLATE = """# {diary_title}
 
 
@@ -83,11 +86,15 @@ def get_last_entry() -> str:
 
 
 def add_day_specific_items(template: str, day: datetime.date) -> str:
-    calendar.day_name[date.weekday()]
+    tpl = template
+    day_string = calendar.day_name[day.weekday()].lower()
 
-    if is_friday(date):
-        tpl += "* [ ] make backup"
-
+    try:
+        for todo in DAY_ITEMS[day_string]:
+            tpl += f'* [ ] {todo}'
+    except KeyError:
+        pass
+    return tpl
 
 
 def render_template(date: datetime.date) -> str:
