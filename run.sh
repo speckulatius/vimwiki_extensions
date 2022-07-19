@@ -44,7 +44,7 @@ _task_test() {
 
 task_test() {
     task_create_env
-    _task_test
+    _task_test "$@"
 }
 
 task_ci() {
@@ -64,6 +64,7 @@ task_build_image() {
 }
 
 cmd=$1
+shift || true
 case "$cmd" in
   create-env) task_create_env ;;
   build) task_build_image ;;
