@@ -15,7 +15,7 @@ task_create_env() {
 
 task_format_python() {
     task_create_env
-    poetry run yapf --vv -ir vimwiki_extensions/*
+    poetry run yapf --verbose -ir vimwiki_extensions/*
 }
 
 _task_check_typing() {
