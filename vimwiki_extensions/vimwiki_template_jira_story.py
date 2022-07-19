@@ -34,6 +34,4 @@ def get_vimwiki_filename():
 
 
 if __name__ == "__main__":
-    print(
-        TEMPLATE.format(jira_story_tag=get_vimwiki_filename())
-    )
+    print(TEMPLATE.format(jira_story_tag=get_vimwiki_filename()))
