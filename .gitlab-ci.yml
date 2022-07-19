@@ -26,10 +26,3 @@ test:
   stage: test
   script:
     - ./run.sh test
-
-update:
-  stage: update
-  script:
-    - ./run.sh update
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
