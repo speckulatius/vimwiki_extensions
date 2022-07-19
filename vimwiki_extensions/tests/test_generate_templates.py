@@ -58,7 +58,6 @@ class TestRenderTemplate:
         # then
         tpl = tpl.format(diary_title=str(friday))
         tpl += "\n* [ ] make backup"
-        tpl += "\n"
         assert template == tpl
 
     def test_copies_open_todos_from_previous_entry(self, render_template, monkeypatch):
