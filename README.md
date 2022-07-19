@@ -1,5 +1,10 @@
 # Vimwiki extensions
 
+## Prerequisites
+* poetry
+* for development:
+  * shellcheck
+
 ## Installation
 
     ./run.sh test
@@ -16,3 +21,9 @@ export VERSION=$(poetry version | awk '{print $2}')
 pyenv activate <YOUR_ENV>
 pip install dist/vimwiki_extensions-"$VERSION"-py3-none-any.whl
 ```
+
+
+## Todo
+* [ ] make this a library where user specific stuff is stored locally and gitignored:
+  * [ ] DAY_SPECIFIC todos shouldnt be commited
+* [ ] make sure mypy is used everywhere
