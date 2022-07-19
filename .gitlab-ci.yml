@@ -1,21 +1,9 @@
 image: registry.gitlab.com/specktrum/vimwiki_extensions:latest
 
 stages:
-  - lint
-  - typing
-  - test
+  - check_code
 
-lint:
-  stage: lint
+check_code:
+  stage: check_code
   script:
-    - ./run.sh lint
-
-typing:
-  stage: typing
-  script:
-    - ./run.sh typing
-
-test:
-  stage: test
-  script:
-    - ./run.sh test
+    - ./run.sh ci

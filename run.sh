@@ -36,8 +36,8 @@ task_test() {
 }
 
 task_ci() {
-    task_format_python
     task_lint
+    task_check_typing
     task_test
 }
 
