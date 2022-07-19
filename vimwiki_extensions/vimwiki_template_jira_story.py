@@ -1,13 +1,13 @@
 #!/home/jan/miniconda3/bin/python
 
-import sys
-
 """
 When run, this module prints out a template for a Jira story entry.
 
 It is used whenever I create a new entry in my vimwiki  for a Jira story (see
 init.vim config).
 """
+
+import sys
 
 
 TEMPLATE = """# {jira_story_tag}
@@ -27,7 +27,10 @@ TEMPLATE = """# {jira_story_tag}
 
 def get_vimwiki_filename():
     """Reads filename and returns it. Used here to get name of Jira Tag."""
-    return sys.argv[1].split("/")[-1].split(".")[0]
+    try:
+        return sys.argv[1].split("/")[-1].split(".")[0]
+    except IndexError:
+        return "Task name"
 
 
 if __name__ == "__main__":

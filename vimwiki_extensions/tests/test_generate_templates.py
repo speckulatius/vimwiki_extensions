@@ -125,3 +125,22 @@ class TestGetLastEntry:
         with pytest.raises(FileNotFoundError):
             # pylint: disable=unused-variable
             prev_entry_date = get_last_entry()
+
+
+class TestRenderTemplateJira:
+    @pytest.fixture
+    def get_vimwiki_filename(self):
+        from vimwiki_template_jira_story import get_vimwiki_filename
+
+        return get_vimwiki_filename
+
+    def test_get_title(self, get_vimwiki_filename):
+        # given
+        jira_task = "PIT-1234"
+        sys.argv.insert(1, jira_task)
+
+        # when
+        title = get_vimwiki_filename()
+
+        # then
+        assert title == jira_task
