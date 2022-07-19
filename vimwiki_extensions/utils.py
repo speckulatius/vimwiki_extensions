@@ -7,7 +7,7 @@ import toml
 
 HERE = Path(__file__).parent
 TEMPLATE_PATH = Path(HERE / "templates")
-CONFIG_PATH = Path(__file__).parent.resolve() / ".." / "config.toml"
+CONFIG_PATH = Path(HERE / "config.toml")
 
 
 def render(template_name, title):
@@ -22,7 +22,8 @@ def render(template_name, title):
 
 def get_config():
     if not CONFIG_PATH.is_file():
-        raise FileNotFoundError("No configuration file found.")
+        raise FileNotFoundError(
+            f"No configuration file found at: {CONFIG_PATH}")
 
     with open(CONFIG_PATH, "r") as f:
         config = toml.load(f)
