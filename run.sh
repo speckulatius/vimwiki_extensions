@@ -63,16 +63,10 @@ task_update_dependencies() {
     poetry update
 }
 
-task_build_image() {
-    docker build -t registry.gitlab.com/specktrum/vimwiki_extensions .
-    docker push registry.gitlab.com/specktrum/vimwiki_extensions
-}
-
 cmd=$1
 shift || true
 case "$cmd" in
   create-env) task_create_env ;;
-  build) task_build_image ;;
   format) task_format_python ;;
   typing) task_check_typing;;
   lint) task_lint ;;
