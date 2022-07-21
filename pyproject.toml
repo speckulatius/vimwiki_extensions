@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "vimwiki_extensions"
 version = "1.0.0"
-description = "Library to templating of diary entries for vimwiki."
+description = "Templating of diary entries for vimwiki."
 authors = ["Jan Specker"]
 
 [tool.poetry.dependencies]

@@ -61,10 +61,7 @@ def _is_open_todo(line: str) -> bool:
         "* [O]",
     ]
 
-    if any(symbol in line for symbol in open_todo_symbols):
-        return True
-
-    return False
+    return any(symbol in line for symbol in open_todo_symbols)
 
 
 def _get_open_todos(entry: str) -> Generator:
@@ -92,7 +89,6 @@ def add_open_todos(template: str) -> str:
         prev_entry_date = ""
 
     # add any open todos to todays entry
-
     if len(open_todos) > 0 and prev_entry_date:
         template += f"\n\n\n### leftovers from {prev_entry_date}"
 
